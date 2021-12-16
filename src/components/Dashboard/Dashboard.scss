@@ -1,0 +1,69 @@
+$color-gray-200: #DDDDDD;
+$color-gray-900: #2C2C2C;
+$color-green-300: #C3EE83;
+$color-green-500: #7DC932;
+$color-green-700: #489019;
+$color-red-300: #FE9F99;
+$color-red-500: #FC5569;
+$color-red-700: #B52A54;
+.Dashboard{
+    .ViewCount{
+        display: flex;
+        align-items: center;
+        margin: 32px 0;
+        width: 100%;
+        height: 94px;
+        .count_item{
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0 8px;
+            height: 100%;
+            .up{
+                background-color: $color-green-300;
+                color: $color-green-700;
+                .mark{
+                    color: $color-green-500;
+                }
+            }
+            .down{
+                background-color: $color-red-300;
+                color: $color-red-700;
+                .mark{
+                    color: $color-red-500;
+                }
+            }
+            .total{
+                display: flex;
+                width: 100%;
+            }
+            .mark{
+                display: flex;
+                align-items: center;
+                padding: 0 4px;
+                height: 21px;
+                margin-left: 8px;
+                border-radius: 5px;
+            }
+        }
+    }
+    .separator{
+        width: 2px;
+        height: 80px;
+        background-color: $color-gray-200;
+        margin: 0 32px;
+    }
+    .ChartComp{
+        width: 95%;
+        height: 214px;
+        margin: 32px 0;
+        font-size: 12px;
+        .header{
+            margin: 64px 8px 32px 8px;
+        }
+        .chart{
+            margin: 32px 0;
+        }
+    }
+}

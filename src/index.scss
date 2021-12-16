@@ -1,0 +1,33 @@
+$color-gray-900: #2C2C2C;
+h1{
+    font-size: 40px;
+    font-family: 'SF_Bold';
+    margin: 0!important;
+    padding: 0!important;
+}
+h2{
+    font-size: 32px;
+    font-family: 'SF_Bold';
+    margin: 0!important;
+    padding: 0!important;
+}
+h4{
+    font-size: 21px;
+    font-family: 'SF_Bold';
+    margin: 0!important;
+    padding: 0!important;
+}
+#root{
+    font-family: 'SF_Regular';
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #E5E5E5;
+    color: $color-gray-900;
+}
+.icon_font{
+    font-family: 'Dripicons';
+}

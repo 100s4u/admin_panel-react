@@ -1,0 +1,11 @@
+$main_back-color: #fff;
+main{
+    display: flex;
+    min-width: 1600px;
+    min-height: 900px;
+    margin: 0 auto;
+    border-radius: 10px;
+	background: $main_back-color;
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+}

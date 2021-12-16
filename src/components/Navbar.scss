@@ -1,0 +1,74 @@
+$color-purple-100: #DAE9FC;
+$color-purple-500: #1473E6;
+$color-gray-200: #DDDDDD;
+$color-purple-800: #0C4284;
+.Navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: column;
+    padding: 2em 0;
+    width: 17.5%;
+    border-right: 2px solid $color-gray-200;
+    .focus{
+        font-size: 18px;
+        background-color: $color-purple-100;
+        font-weight: bold;
+    }
+    .top{
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        height: 55%;
+        justify-content: space-between;
+    }
+    .links{
+        display: flex;
+        align-items: flex-start;
+        flex-flow: column;
+        font-size: 18px;
+        .link{
+            display: flex;
+            align-items: center;
+            padding: 0 1em;
+            color: $color-purple-800;
+            width: auto;
+            height: 40px;
+            margin: 8px 0;
+            border-radius: 50px;
+        }
+        .logOut{
+            display: flex;
+            align-items: center;
+            text-align: left;
+            padding: 0 1em;
+            color: $color-purple-800;
+            background: none;
+            width: auto;
+            height: 40px;
+            margin: 8px 0;
+            border-radius: 50px;
+            margin: 0;
+            border: none;
+            cursor: pointer;
+        }
+        .icon{
+            margin-right: 8px;
+            font-weight: lighter;
+        }
+    }
+    .add_button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 180px;
+        height: 40px;
+        font-size: 14px;
+        border-radius: 50px;
+        color: #fff;
+        background-color: $color-purple-500;
+        .plus{
+            margin-right: 5px;
+        }
+    }
+}
