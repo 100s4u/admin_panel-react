@@ -4,19 +4,15 @@ import PostService from '../../api/post';
 
 export const ViewCount = () => {
     const dispatch = useDispatch();
-
-    const view = useSelector(state => ({
-        totalView: state.totalViewCount,
-        views: state.viewCount,
-    }));
+    const [totalView, views] = useSelector((state) => [
+        state.totalViewCount,
+        state.viewCount
+    ]);
     async function getViews(token){
         const response = await PostService.GetViews(token);
-        let views = [];
-        let read = [];
-        for(let item in response) { 
-            views.push(response[item].views_count);
-            read.push(response[item].read_count);
-        }
+        const {views, read} = response.reduce((acc, cur)=>{
+            return {views: [...acc.views, cur.views_count], read: [...acc.read, cur.read_count]}
+        }, {views: [], read: []});
         dispatch({
             type: "SET_VIEW_COUNT",
             payload: {
@@ -41,19 +37,21 @@ export const ViewCount = () => {
             }
         });
     }
+    const diffViews = getDiffCount(views.views);
+    const diffRead = getDiffCount(views.read);
     const isPositiveDiff = {
         views: {
-            mark: getDiffCount(view.views.views)>=0?'n':'k',
-            sign: getDiffCount(view.views.views)>=0?'+':'',
-            style: getDiffCount(view.views.views)>=0?'up':'down',
-            count: getDiffCount(view.views.views)?getDiffCount(view.views.views):0
+            mark: diffViews>=0?'n':'k',
+            sign: diffViews>=0?'+':'',
+            style: diffViews>=0?'up':'down',
+            count: diffViews?diffViews:0
         },
         read: {
-            mark: getDiffCount(view.views.read)>=0?'n':'k',
-            sign: getDiffCount(view.views.read)>=0?'+':'',
-            style: getDiffCount(view.views.read)>=0?'up':'down',
-            count: getDiffCount(view.views.read)?getDiffCount(view.views.read):0
-        }
+            mark: diffRead>=0?'n':'k',
+            sign: diffRead>=0?'+':'',
+            style: diffRead>=0?'up':'down',
+            count: diffRead?diffRead:0
+            }
     };
     useEffect(() => {
         getTotalViews(localStorage.token);
@@ -63,7 +61,7 @@ export const ViewCount = () => {
     return (
         <div className='ViewCount util'>
             <div className='count_item'>
-                <h2>{Intl.NumberFormat('en-In').format(view.totalView.views)}</h2>
+                <h3>{Intl.NumberFormat('en-In').format(totalView.views)}</h3>
                 <div className='total'>
                     <span>Total View</span>
                     <div className={isPositiveDiff.views.style+' mark'}>
@@ -75,7 +73,7 @@ export const ViewCount = () => {
             </div>
             <div className='separator'></div>
             <div className='count_item'>
-                <h2>{Intl.NumberFormat('en-In').format(view.totalView.read)}</h2>
+                <h3>{Intl.NumberFormat('en-In').format(totalView.read)}</h3>
                 <div className='total'>
                     <span>Total Read</span>
                     <div className={isPositiveDiff.read.style+' mark'}>

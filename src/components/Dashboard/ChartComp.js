@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { InputNumber } from 'antd';
 import {
     LineChart,
     Line,
@@ -11,32 +12,56 @@ import {
 import PostService from '../../api/post';
 import { useSelector, useDispatch } from 'react-redux';
 
-// viewStaticData
 export const ChartComp = () => {
-    const data = useSelector(state => state.viewStaticData);
+    const [data, limit, limit_status] = useSelector((state) => [
+        state.viewStaticData,
+        state.viewStaticLimit.value,
+        state.viewStaticLimit.isNew
+    ]);
+    const [maxData, setMaxData] = useState(0);
     const dispatch = useDispatch();
     async function getData(token){
         const response = await PostService.GetViews(token);
-        const data = Object.keys(response).map((item, i) => {
-            return ({
-                name: response[item].date,
-                views: parseInt(response[item].views_count),
-            });
-        });
+        const maxData = response.length;
+        setMaxData(maxData);
+        let data = [];
+        for (let i = maxData-limit; i < maxData; i++) {
+            if(response[i]){
+                data.push({
+                    name: response[i].date,
+                    views: parseInt(response[i].views_count)
+                });
+            }
+        }
         dispatch({
             type: "SET_VIEW_STATIC",
             payload: data
         });
+        if(limit_status){
+            dispatch({
+                type: "SET_VIEW_STATIC_LIMIT",
+                payload: {
+                    value: maxData,
+                    isNew: false
+                }
+            });
+        }
     }
-
+    function changePeriod(e){
+        dispatch({
+            type: "SET_VIEW_STATIC_LIMIT",
+            payload: {...limit, value: e}
+        });
+    }
     useEffect(() => {
         getData(localStorage.token);
         // eslint-disable-next-line
-    }, []);
+    }, [limit]);
     return (
         <div className='ChartComp'>
             <div className='header'>
-                <h4>View Static</h4>
+                <h4>View Static</h4>   
+                <InputNumber size="small" min={2} max={maxData} value={limit} onChange={(e)=>{changePeriod(e)}} /> 
             </div>
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart
@@ -71,7 +96,6 @@ export const ChartComp = () => {
                         stroke="#1473E6"
                         activeDot={{ r: 10 }}
                         strokeWidth={2.5}
-                        isAnimationActive={false}
                         dot={false}
                     />
                 </LineChart>

@@ -10,6 +10,7 @@ import {
   SET_LOCATION,
   SET_VIEW_COUNT,
   SET_VIEW_STATIC,
+  SET_VIEW_STATIC_LIMIT,
   SET_TOTAL_VIEW_COUNT,
   SET_TOKEN } from './actions';
 
@@ -20,14 +21,21 @@ const defaultState = {
     title: 'Dashboard',
     path: '/'
   },
-  viewStaticData: {},
+  viewStaticLimit: {
+    value: 0,
+    isNew: true
+  },
+  viewStaticData: {
+    name: 'None',
+    views: 0
+  },
   totalViewCount:{
     views: 0,
     read: 0
   },
   viewCount:{
-    views: [],
-    read: []
+    views: [0],
+    read: [0]
   }
 }
 
@@ -41,8 +49,10 @@ const reducer = (state = defaultState, action) => {
       return {...state, totalViewCount: action.payload}
     case SET_VIEW_COUNT:
       return {...state, viewCount: action.payload}
-      case SET_VIEW_STATIC:
-        return {...state, viewStaticData: action.payload}
+    case SET_VIEW_STATIC:
+      return {...state, viewStaticData: action.payload}
+    case SET_VIEW_STATIC_LIMIT:
+      return {...state, viewStaticLimit: action.payload}
     case SET_TOKEN:
       return {...state, token: action.payload}
     default:
